@@ -1,0 +1,35 @@
+Palavra this em uso no C#
+
+-- Diferenciar atributos de variáveis locais
+
+public Produto (string Nome, double Preco, int Quantidade)
+    {
+        this.Nome = Nome;
+        this.Preco = Preco;
+        this.Quantidade = Quantidade;
+    }
+
+-- Referenciar outro construtor em um construtor
+
+public Produto()
+    {
+        Quantidade = 0;
+    }
+
+public Produto (string nome, double preco) : this()
+    {
+        Nome = nome;
+         Preco = preco;
+    }
+
+public Produto (string nome, double preco, int quantidade) : this(nome, preco)
+    {
+        Quantidade = quantidade;
+    }
+
+-- Passando o próprio objeto como argumento na chamada de um método ou construtor
+// O this nesse caso é o próprio objeto ChessMatch
+class ChessMatch {
+    (...)
+    PlaceNewPiece('e', 1, new King(board, Color.White, this))
+}

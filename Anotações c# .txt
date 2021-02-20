@@ -1,0 +1,143 @@
+********** ANOTAÇÕES C# *************
+
+CLR: Common Language Runtime (Máquina Virtual)
+CIL: Common Intermediate Language (CIL)
+
+Modelo híbrido da compilação do C#: Inicia-se com uma pré-compilação gerando um código intermediario byteCode em uma CIL("platform agnostic"), para depois rodar em uma CLR.
+
+Namespace =  Agrupamento LÓGICO de classes relacionadas.
+Assembly (Representa o DLL ou EXE da minha aplicação) = Agrupamento físico de classes relacionadas(build) ~ Posso entender como a criação de projetos para determinados serviços.
+Aplicação = Agrupamento de assemblies relacionados. ~ Posso entender que uma Solutions é uma aplicação e dentro de uma solution posso ter vários projetos/assembly.
+
+Dentro VS = Aplicação: Solution | Assembly: Project
+
+-------------------------------------------------------
+
+Conversões implícitas entre tipo: É onde atribuo um conteúdo de um tipo para outro. 
+Casting: É uma conversão explícita entre tipos compativeis.
+
+Classe: É um tipo estruturado que pode conter: atributos, métodos, construtores e etc. e que representa melhor minha aplicação.
+Toda classe em C# é uma subclasse da classe Object e nela temos:
+	1.0 GetType -  Retorna o tipo do objeto
+	2.0 Equals -  Compara se o  objeto é igual a outro
+	3.0 GetHashCode - Retorna um código hash do objeto
+	4.0 ToString - Converte o objeto para string
+	4.1 Função para retorno de strings = public override string ToString() 
+	{
+		return algo;
+	}
+	
+Membros estáticos:
+	1.0 São membros que fazem sentido independente de objetos. Não precisam de objeto para serem chamados. São chamados a partir do próprio nome da classe.
+	2.0 Podem ser criados métodos estáticos fora de uma classe estática e podem ser chamados dentro da classe estática
+		apenas pelo nome do método. Ex de chamada de método: Entrada (parametro);
+		Ex de declaração de variável estática: static double Pi = 3,14;
+	3.0 Pode-se criar uma classe e dentro ter métodos estáticos e membros estáticos. Ex na chamada do program principal: NomeDaClasse.OQueDeseja(parametro);
+	
+Construtores:
+	1.0 É uma operação especial da classe, que executa no momento da instanciação do objeto, ex.: iniciar valores dos atributos. Caso nenhum construtor
+		seja especificado a classe disponibiliza o padrao que é: Produto p = new Produto();
+	2.0 Sobrecarga: É um recuros que uma classe possui de oferecer mais de uma operação com o mesmo nome, porém com diferentes listas de parametros.
+	
+Palavra this:
+	1.0 É uma referencia para o proprio objeto.
+	2.0 Uso comuns: Diferenciar atributos de variáveis locais. / Referenciar outro construtor em um construtor./ Passar o próprio objeto como argumento na
+		chamada de um método ou construtor.
+
+Encapsulamento:
+	1.0 É um princípio que consiste em esconder detalhes de implementação de um componente, expondo apenas operações seguras e que o mantenha em um estado consistente.
+		Regra: O objeto deve sempre estar em um estado consistente, e a própria classe deve garantir isso.
+	2.0 Uso do get e set: Get pega o valor e Set faz a modificação. É possivel fazer lógicas no uso do Set conforme regras de negócio.
+	
+Propriedades(Properties):
+	1.0 São definições de métodos encapsulados, porém expondo uma sintaxe similar à de atributos e não de métodos. As propriedades podem ser usadas como se fossem atributos públicos
+		mas na verdade elas são métodos especiais chamados de "acessadores".
+	
+Propriedades autoimplementadas(Auto Properties):
+	1.0 É uma forma simplificada de se declarar propriedades que não necessitam lógicas particulares para as operações get e set.
+	
+
+Ordem sugerida para implementação de membros de classe
+	1.0 Atributos privados
+	2.0 Propriedades autoimplementadas
+	3.0 Construtores
+	4.0 Propriedades costumizadas
+	5.0 Outros métodos da classe.
+	
+Modificadores de acesso:
+	1.0 Os modificadores de acesso são palavras-chave usadas para especificar a acessibilidade declarada de um membro ou de um tipo.
+	2.0 São quatro modificadores: public, protected, internal e private.
+	3.0 Existem seis níveis de acessibilidade que podem ser especificados usando os modificadores de acesso:
+		3.1 public: O acesso não é restrito.
+		3.2 protected: O acesso é limitado à classe que a contém ou aos tipos derivados da classe que a contém.
+		3.3 internal: O acesso é limitado ao assembly atual.
+		3.4 protected internal: O acesso é limitado ao assembly ou tipos atuais derivados da classe que a contém.
+		3.5 private: O acesso é limitado ao tipo recipiente.
+		3.6 private protected: O acesso é limitado à classe que a contém ou aos tipos derivados da classe que a contém dentro do assembly atual.
+
+Tipos referência: Classes | Tipos valor:  Struct
+	1.0 Variáveis cujo tipo são classes não devem ser entendidas como caixas, mas sim "tentáculos" (ponteiros) para caixa.
+	2.0 Os tipos valor que são os "structs" são caixas e não ponteiros.
+	3.0 Quando alocamos (new) qualquer tipo estruturado(classe, struct, array), são atribuídos valores parão aos seus elementos:
+		3.1 números: 0 | bool: false | char: caractere código 0 | objeto: null.
+
+Desalocação de memória:
+	1.0 Garbage collector: É um processo que automatiza o gerenciamento de memória de um programa em execução.
+	1.1 Objetos alocados dinamicamente, quando não passuem mais refrência para eles, serão desalocados pelo garbage collector.
+	2.0 Variáveis locais são desalocadas imediatamente assim que seu escopo local sai de execução.
+
+Nullabe:
+	1.0 É um recurso de C# para que dados do tipo valor possam receber o valor null.
+
+Arrays:
+	1.0 Arranjo é uma estrutura de dados: Homogênea(dados do mesmo tipo), Ordenada(elementos acessados por meio de posições), Alocada de uma vez só, em um bloco contíguo de memória.
+
+Modificadores de acesso(Código smell):
+	1.0 params: faz com que o vetor não precise ser instanciado.
+	2.0 A variável passada como parâmetro ref DEVE ter sido iniciada já a vriável passada como parâmetro out não precisa ser instanciado.
+
+Boxing e Unboxing:
+	1.0 Boxing é o processo de conversão de um objeto tipo valor para um objeto tipo referência compatível.
+	2.0 Unboxing é o processo de conversão de um objeto tipo referência para um objeto tipo valor compatível.
+
+Foreach:
+	Sintaxe opcional para percorrer coleções.
+
+Listas:
+	1.0 Listas é uma estrutura de dados: Homogênea(dados do mesmo tipo), Ordenada(elementos acessados por meio de posições), Inicia vazia, e seus elementos são alocados sob demanda, Cada elemento ocupa um "nó"(ou nodo) da lista.
+	
+DateTime e TimeSpan:
+	1.0 Representa um INSTANTE: Obtém um objeto DateTime definido como a data e hora atuais neste computador, expressas como a hora local.
+	2.0 Representa uma DURAÇÃO: Um TimeSpan objeto representa um intervalo de tempo (duração de tempo ou tempo decorrido) medido como um número positivo ou negativo de dias, 
+		horas, minutos, segundos e frações de um segundo.
+	3.0 DateTimeKind são esses três valores possíveis:
+		3.1 Horário local: Fuso horário do sistema. Ex.: São Paulo = GMT -3.
+		3.2 UTC: Fuso horário GMT(Greenwich Mean Time) // Horário de londres.
+		3.3 Unspecifed.
+	
+
+
+
+
+
+
+
+
+
+* Tipos Enumerados:
+
+* HERANÇA: Associação que permite que uma classe herde dados e comportamentos de outra.
+
+* UPCASTING é casting da subclasse para a superclasse, e *DOWNCASTING é casting da superclasse para subclasse.
+
+
+
+
+	
+
+
+******** MVC *************
+
+Model onde obtem os codigos, controller intermedia as requisições de model com a view, view onde tem apresentação da pagina, interação com o usuario.
+
+*** Uma função ActionResult na Controller se pode chamar uma view.
